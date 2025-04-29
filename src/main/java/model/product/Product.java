@@ -7,8 +7,8 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Product {
-
-    UUID id;
+    
+    long id;
     String name;
     String description;
     BigDecimal price;
@@ -17,7 +17,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(UUID id, String name, String description, BigDecimal price, int quantity, Category category) {
+    public Product(long id, String name, String description, BigDecimal price, int quantity, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,11 +26,11 @@ public class Product {
         this.category = category;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
