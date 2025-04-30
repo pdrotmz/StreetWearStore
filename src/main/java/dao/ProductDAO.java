@@ -1,34 +1,70 @@
 package dao;
 
 import model.product.Product;
+import util.ConnectionFactory;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductDAO implements DAO<Product>{
+public class ProductDAO{
 
-
-    @Override
     public void saveProduct(Product product) {
+        String sql = "INSERT INTO product (name, description, price, quantity) VALUES (?, ?, ?, ?)";
 
+        try(Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, product.getName());
+            stmt.setString(2, product.getDescription());
+            stmt.setBigDecimal(3, product.getPrice());
+            stmt.setInt(4, product.getQuantity());
+
+            stmt.executeUpdate();
+
+            System.out.println("Produto salvo com sucesso!");
+        } catch(SQLException exception) {
+            throw new RuntimeException("Erro ao salvar produto", exception);
+        }
     }
 
-    @Override
+
     public List<Product> findAll() {
-        return List.of();
+
+        List<Product> products = new ArrayList<>();
+        String sql =  "SELECT * FROM product";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)){
+
+            while(resultSet.next()) {
+                Product product = new Product(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("description"),
+                    resultSet.getBigDecimal("price"),
+                    resultSet.getInt("quantity")
+                );
+                products.add(product);
+            }
+
+        } catch(SQLException exception) {
+            throw new RuntimeException("Erro ao lista os produtos", exception);
+        }
+
+        return products;
     }
 
-    @Override
     public Optional<Product> findProductById(long id) {
         return Optional.empty();
     }
 
-    @Override
     public Optional<Product> findProductByName(String name) {
         return Optional.empty();
     }
 
-    @Override
     public void deleteProductById(long id) {
 
     }
