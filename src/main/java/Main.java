@@ -16,17 +16,13 @@ public class Main {
         boolean execution = true;
         User user = new User();
 
-        do {
-            System.out.println("----- FAÇA SEU CADASTRO -----");
-            System.out.print("\nDigite seu username: ");
-            user.setUsername(scanner.nextLine());
-            System.out.print("\nDigite seu email: ");
-            user.setEmail(scanner.nextLine());
-            System.out.print("\nDigite sua senha: ");
-            user.setPassword(scanner.nextLine());
-        }
-
-        while(!user.getEmail().contains("@"));
+        System.out.println("----- FAÇA SEU CADASTRO -----");
+        System.out.print("\nDigite seu username: ");
+        user.setUsername(scanner.nextLine());
+        System.out.print("\nDigite seu email: ");
+        user.setEmail(scanner.nextLine());
+        System.out.print("\nDigite sua senha: ");
+        user.setPassword(scanner.nextLine());
 
         userService.registerUser(user);
 
