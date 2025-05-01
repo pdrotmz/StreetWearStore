@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Admin {
 
-    private UUID id;
+    private long id;
     private String username;
     private String email;
     private String password;
@@ -14,7 +14,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(UUID id, String username, String email, String password, String domain) {
+    public Admin(long id, String username, String email, String password, String domain) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -22,11 +22,11 @@ public class Admin {
         this.domain = domain;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
