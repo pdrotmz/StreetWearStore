@@ -1,25 +1,24 @@
+version: "3.8"
+
 services:
-  oracledb:
-    image: container-registry.oracle.com/database/free:latest
-    environment:
-      - ORACLE_PWD=admin123
+  oracle:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: oracle-xe
     ports:
-      - 1521:1521
+      - "1521:1521"
+      - "8080:8080"
+    environment:
+      ORACLE_PASSWORD: swsadmin
+      APP_USER: huey
+      APP_USER_PASSWORD: hueyadmin
     volumes:
       - oracle-data:/opt/oracle/oradata
-    healthcheck:
-      test: ["CMD", "ls"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
 
   redis:
     image: redis:7
+    container_name: redis
     ports:
-      - 6379:6379
-    volumes:
-      - redis-data:/data
+      - "6379:6379"
 
 volumes:
   oracle-data:
-  redis-data:

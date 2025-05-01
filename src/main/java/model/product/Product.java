@@ -7,34 +7,32 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Product {
-
-    UUID id;
+    
+    long id;
     String name;
     String description;
     BigDecimal price;
     int quantity;
-    Category category;
 
     public Product() {}
 
-    public Product(UUID id, String name, String description, BigDecimal price, int quantity, Category category) {
+    public Product(long id, String name, String description, BigDecimal price, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.category = category;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
@@ -64,13 +62,5 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 }
