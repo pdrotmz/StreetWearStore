@@ -1,9 +1,12 @@
 package service;
 
 import dao.UserDAO;
+import exceptions.user.IncorrectPasswordException;
+import exceptions.user.IncorrectUsernameException;
 import exceptions.user.InvalidEmailFormatException;
 import exceptions.user.InvalidPasswordFormat;
 import model.user.User;
+import org.mindrot.jbcrypt.BCrypt;
 import util.EncryptPassword;
 
 public class UserService {
@@ -21,4 +24,16 @@ public class UserService {
         userDao.saveUser(user);
     }
 
+    public void loginUser(String username, String password) {
+        User userNotLogged = userDao.findBYUsername(username);
+
+        if(userNotLogged == null) {
+            throw new IncorrectUsernameException("Usuário não encontrado!");
+        }
+
+        if(!BCrypt.checkpw(password, userNotLogged.getPassword())) {
+            throw new IncorrectPasswordException();
+        }
+        System.out.println("Login bem-sucedido!");
+    }
 }
