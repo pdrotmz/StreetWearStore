@@ -9,7 +9,7 @@ public class ConnectionFactory {
     private static final String USER = EnvLoader.get("USER");
     private static final String PASSWORD = EnvLoader.get("PASSWORD");
 
-    private static Connection connection;
+    public static Connection connection;
 
     static {
         try {
@@ -20,12 +20,10 @@ public class ConnectionFactory {
     }
 
     public static Connection getInstance() {
-        if (connection == null) {
             try {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            } catch (SQLException e) {
-                throw new RuntimeException("Erro ao obter conexão com o banco", e);
-            }
+            } catch (SQLException exception) {
+                throw new RuntimeException("Erro ao obter conexão com o banco", exception);
         }
         return connection;
     }
