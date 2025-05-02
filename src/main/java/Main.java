@@ -122,7 +122,7 @@ public class Main {
                 }
                 case 2 -> {
                     var products = productService.findAllProducts();
-                    products.forEach(product -> System.out.println(product.getName() + " - " + product.getPrice()));
+                    products.forEach(product -> System.out.println(product.getName() + " - " + product.getPrice() + "\n"));
                 }
                 case 3 -> execution = false;
                 default -> System.out.println("Opção inválida!");
