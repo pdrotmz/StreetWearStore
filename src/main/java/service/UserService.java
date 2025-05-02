@@ -7,7 +7,6 @@ import exceptions.user.InvalidEmailFormatException;
 import exceptions.user.InvalidPasswordFormat;
 import model.user.User;
 import org.mindrot.jbcrypt.BCrypt;
-import util.EncryptPassword;
 
 public class UserService {
 
@@ -19,7 +18,7 @@ public class UserService {
         } else if (!(user.getPassword().length() > 8)) {
             throw new InvalidPasswordFormat();
         }
-        String hashedPassword = EncryptPassword.hashPassword(user.getPassword());
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
         userDao.saveUser(user);
     }
