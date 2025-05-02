@@ -1,22 +1,32 @@
 package util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionFactory {
+    private static final String URL = EnvLoader.get("URL");
+    private static final String USER = EnvLoader.get("USER");
+    private static final String PASSWORD = EnvLoader.get("PASSWORD");
 
-    private static final String URL = "jdbc:oracle:thin:@//localhost:1521/XEPDB1";
-    private static final String USER = "huey";
-    private static final String PASSWORD = "hueyadmin";
+    private static Connection connection;
 
     static {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-        } catch (ClassNotFoundException exception) {
-            throw new RuntimeException("Oracle JDBC Driver not found", exception);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Driver Oracle não encontrado.", e);
         }
     }
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public static Connection getInstance() {
+        if (connection == null) {
+            try {
+                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            } catch (SQLException e) {
+                throw new RuntimeException("Erro ao obter conexão com o banco", e);
+            }
+        }
+        return connection;
     }
 }
