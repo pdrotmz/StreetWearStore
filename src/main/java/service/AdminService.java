@@ -19,7 +19,7 @@ public class AdminService {
         adminDAO.SaveAdmin(admin);
     }
 
-    public void loginUser(String email, String password) {
+    public void loginAdmin(String email, String password) {
         Admin adminNotLogged = adminDAO.findByEmail(email);
 
         if(adminNotLogged == null) {
