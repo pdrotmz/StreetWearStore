@@ -13,7 +13,7 @@ public class ProductDAO{
     public void saveProduct(Product product) {
         String sql = "INSERT INTO product (name, description, price, quantity) VALUES (?, ?, ?, ?)";
 
-        try(Connection connection = ConnectionFactory.getConnection();
+        try(Connection connection = ConnectionFactory.getInstance();
             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setString(1, product.getName());
@@ -35,7 +35,7 @@ public class ProductDAO{
         List<Product> products = new ArrayList<>();
         String sql =  "SELECT * FROM product";
 
-        try (Connection connection = ConnectionFactory.getConnection();
+        try (Connection connection = ConnectionFactory.getInstance();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)){
 

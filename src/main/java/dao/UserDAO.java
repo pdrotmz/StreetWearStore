@@ -13,7 +13,7 @@ public class UserDAO{
     public void saveUser(User user) {
         String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
 
-        try(Connection connection = ConnectionFactory.getConnection();
+        try(Connection connection = ConnectionFactory.getInstance();
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, user.getUsername());
@@ -31,7 +31,7 @@ public class UserDAO{
     public User findById(long id) {
         String sql = "SELECT * FROM users WHERE id = ?";
 
-        try(Connection connection = ConnectionFactory.getConnection();
+        try(Connection connection = ConnectionFactory.getInstance();
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, id);
@@ -53,7 +53,7 @@ public class UserDAO{
     public User findBYUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
 
-        try(Connection connection = ConnectionFactory.getConnection();
+        try(Connection connection = ConnectionFactory.getInstance();
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, username);
