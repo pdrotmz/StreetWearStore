@@ -17,7 +17,6 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        boolean execution = true;
         int optionRole;
 
         System.out.println("------------- BEM-VINDOS A STREET WEAR STORE -------------");
