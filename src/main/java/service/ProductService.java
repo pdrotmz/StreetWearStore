@@ -3,6 +3,7 @@ package service;
 import dao.ProductDAO;
 import exceptions.product.InvalidQuantityProduct;
 import exceptions.product.InvalidValuePrice;
+import exceptions.product.ProductNotFoundException;
 import model.product.Product;
 
 import java.math.BigDecimal;
@@ -24,5 +25,13 @@ public class ProductService {
 
     public List<Product> findAllProducts() {
         return productDAO.findAll();
+    }
+
+    public void findProductByName(String name) {
+        Product product = new Product();
+        if(product.getName().isEmpty()) {
+            throw new ProductNotFoundException(name);
+        }
+        productDAO.findProductByName(name);
     }
 }
