@@ -33,7 +33,6 @@ public class Main {
 
             case 2 -> {
                 adminController.menu();
-                adminController.painelAdmin();
             }
         }
     }
