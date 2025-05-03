@@ -69,7 +69,8 @@ public class UserController {
         while(execution) {
             System.out.println("------------- BEM-VINDOS A STREET WEAR STORE -------------");
             System.out.println("\n1- Listar Produtos");
-            System.out.println("2 - Sair");
+            System.out.println("2 - Buscar produto por nome");
+            System.out.println("3 - Sair");
             System.out.println();
 
             int option = scanner.nextInt();
@@ -82,6 +83,9 @@ public class UserController {
                     products.forEach(product -> System.out.println(product.getName() + " - " + product.getPrice() + "\n"));
                 }
                 case 2 -> {
+
+                }
+                case 3 -> {
                     execution = false;
                 }
                 default -> System.out.println("Opção inválida!");
