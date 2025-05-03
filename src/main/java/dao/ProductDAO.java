@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.product.ProductNotFoundException;
 import model.product.Product;
 import util.ConnectionFactory;
 
@@ -57,11 +58,30 @@ public class ProductDAO{
         return products;
     }
 
-    public Optional<Product> findProductById(long id) {
+    public Optional<Product> findProductByName(String name) {
+        String sql = "SELECT * FROM product p WHERE p.name = ?";
+
+        try(Connection connection = ConnectionFactory.getInstance();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                Product product = new Product();
+                product.setName(resultSet.getString("name"));
+
+                return Optional.of(product);
+            }
+
+
+        } catch(SQLException exception) {
+            throw new ProductNotFoundException(name);
+        }
         return Optional.empty();
     }
 
-    public Optional<Product> findProductByName(String name) {
+    public Optional<Product> findProductById(long id) {
         return Optional.empty();
     }
 
