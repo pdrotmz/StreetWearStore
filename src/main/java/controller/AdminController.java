@@ -66,6 +66,7 @@ public class AdminController {
         admin.setPassword(scanner.nextLine());
 
         adminService.loginAdmin(admin.getEmail(), admin.getPassword());
+        painelAdmin();
     }
 
     public void painelAdmin() {
