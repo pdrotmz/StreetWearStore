@@ -1,6 +1,8 @@
 package controller;
 
+import model.product.Product;
 import model.user.User;
+import service.ProductService;
 import service.UserService;
 
 import java.util.Scanner;
@@ -8,10 +10,12 @@ import java.util.Scanner;
 public class UserController {
 
     private final UserService userService;
+    private final ProductService productService;
     private final Scanner scanner;
 
     public UserController() {
         this.userService = new UserService();
+        this.productService = new ProductService();
         this.scanner = new Scanner(System.in);
     }
 
@@ -56,5 +60,34 @@ public class UserController {
         user.setPassword(scanner.nextLine());
 
         userService.loginUser(user.getUsername(), user.getPassword());
+        listAllProducts();
+    }
+
+    public void listAllProducts() {
+        boolean execution = true;
+
+        while(execution) {
+            System.out.println("------------- BEM-VINDOS A STREET WEAR STORE -------------");
+            System.out.println("\n1- Listar Produtos");
+            System.out.println("2 - Sair");
+            System.out.println();
+
+            int option = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (option) {
+                case 1 -> {
+                    var products = productService.findAllProducts();
+                    System.out.println("-------- PRODUTOS --------");
+                    products.forEach(product -> System.out.println(product.getName() + " - " + product.getPrice() + "\n"));
+                }
+                case 2 -> {
+                    execution = false;
+                }
+                default -> System.out.println("Opção inválida!");
+
+            }
+        }
     }
 }
+
