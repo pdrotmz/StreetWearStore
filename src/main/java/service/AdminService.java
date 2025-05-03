@@ -16,6 +16,8 @@ public class AdminService {
         } else if (!(admin.getPassword().length() > 8)) {
             System.err.println("Senha precisa ter mais 8 caracteres");
         }
+        String hashedPassword = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt());
+        admin.setPassword(hashedPassword);
         adminDAO.SaveAdmin(admin);
     }
 
