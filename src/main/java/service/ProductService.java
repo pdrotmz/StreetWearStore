@@ -1,13 +1,14 @@
 package service;
 
 import dao.ProductDAO;
-import exceptions.product.InvalidQuantityProduct;
-import exceptions.product.InvalidValuePrice;
-import exceptions.product.ProductNotFoundException;
+import exceptions.product.InvalidQuantityProductException;
+import exceptions.product.InvalidValueProductPriceException;
+import exceptions.product.ProductNotFoundByNameException;
 import model.product.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 
 public class ProductService {
@@ -15,10 +16,10 @@ public class ProductService {
 
     public void registerProduct(Product product) {
         if (product.getPrice().compareTo(BigDecimal.ZERO) < 0) {
-            throw new InvalidValuePrice();
+            throw new InvalidValueProductPriceException();
         }
         else if(product.getQuantity() < 0) {
-            throw new InvalidQuantityProduct();
+            throw new InvalidQuantityProductException();
         }
         productDAO.saveProduct(product);
     }
@@ -28,10 +29,21 @@ public class ProductService {
     }
 
     public void findProductByName(String name) {
-        Product product = new Product();
-        if(product.getName().isEmpty()) {
-            throw new ProductNotFoundException(name);
+        List<Product> foundProducts = productDAO.findProductByName(name);
+
+        if(foundProducts.isEmpty()) {
+            throw new ProductNotFoundByNameException(name);
         }
-        productDAO.findProductByName(name);
+
+        for(Product product : foundProducts) {
+            System.out.println("------------");
+            System.out.println("ID: " + product.getId());
+            System.out.println("Nome: " + product.getName());
+            System.out.println("Descrição: " + product.getDescription());
+            System.out.println("Preço: " + product.getPrice());
+            System.out.println("Quantidade: " + product.getQuantity());
+            System.out.println("------------");
+        }
     }
+
 }
