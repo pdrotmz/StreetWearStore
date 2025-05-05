@@ -1,8 +1,8 @@
 package service;
 
 import dao.AdminDAO;
-import exceptions.user.IncorrectPasswordException;
-import exceptions.user.IncorrectUsernameException;
+import exceptions.admin.IncorrectPasswordException;
+import exceptions.admin.IncorrectUsernameException;
 import model.admin.Admin;
 import org.mindrot.jbcrypt.BCrypt;
 
