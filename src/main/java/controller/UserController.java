@@ -68,8 +68,8 @@ public class UserController {
 
         while(execution) {
             System.out.println("------------- BEM-VINDOS A STREET WEAR STORE -------------");
-            System.out.println("\n1- Listar Produtos");
-            System.out.println("2 - Buscar produto por nome");
+            System.out.println("\n1 - Listar Produtos");
+            System.out.println("2 - Buscas produto por nome");
             System.out.println("3 - Sair");
             System.out.println();
 
@@ -80,10 +80,15 @@ public class UserController {
                 case 1 -> {
                     var products = productService.findAllProducts();
                     System.out.println("-------- PRODUTOS --------");
-                    products.forEach(product -> System.out.println(product.getName() + " - " + product.getPrice() + "\n"));
+                    products.forEach(product ->
+                            System.out.println(product.getName() + " - " + "R$" +product.getPrice() + "\n"));
                 }
                 case 2 -> {
+                    Product product = new Product();
+                    System.out.print("Digite o nome do produto: ");
+                    product.setName(scanner.nextLine());
 
+                    productService.findProductByName(product.getName());
                 }
                 case 3 -> {
                     execution = false;
