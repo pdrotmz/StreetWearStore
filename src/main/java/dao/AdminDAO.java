@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.admin.InvalidEmailFormatException;
 import model.admin.Admin;
 import model.user.User;
 import util.ConnectionFactory;
@@ -51,7 +52,7 @@ public class AdminDAO {
 
             return null;
         } catch(SQLException exception) {
-            throw new RuntimeException("Erro ao buscar admin!" + exception);
+            throw new InvalidEmailFormatException(email);
         }
     }
 }
