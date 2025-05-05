@@ -1,6 +1,7 @@
 package dao;
 
-import exceptions.product.ProductNotFoundException;
+import exceptions.product.ProductNotFoundByIdException;
+import exceptions.product.ProductNotFoundByNameException;
 import model.product.Product;
 import util.ConnectionFactory;
 
@@ -58,30 +59,61 @@ public class ProductDAO{
         return products;
     }
 
-    public Optional<Product> findProductByName(String name) {
-        String sql = "SELECT * FROM product p WHERE p.name = ?";
+    public List<Product> findProductByName(String name) {
+        String sql = "SELECT * FROM product p WHERE p.name LIKE ?";
 
-        try(Connection connection = ConnectionFactory.getInstance();
+        List<Product> products = new ArrayList<>();
+
+        try (Connection connection = ConnectionFactory.getInstance();
             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, name);
+            statement.setString(1,"%" + name + "%");
             ResultSet resultSet = statement.executeQuery();
 
-            if(resultSet.next()) {
+            while(resultSet.next()) {
                 Product product = new Product();
+                product.setId(resultSet.getLong("id"));
                 product.setName(resultSet.getString("name"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setQuantity(resultSet.getInt("quantity"));
 
-                return Optional.of(product);
+                products.add(product);
+
             }
 
-
         } catch(SQLException exception) {
-            throw new ProductNotFoundException(name);
+            throw new ProductNotFoundByNameException(name);
         }
-        return Optional.empty();
+
+        return products;
     }
 
     public Optional<Product> findProductById(long id) {
+        String sql = "SELECT * FROM product p WHERE p.id = ?";
+
+        try (Connection connection = ConnectionFactory.getInstance();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                Product product = new Product();
+                product.setId(resultSet.getLong("id"));
+                product.setName(resultSet.getString("name"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setQuantity(resultSet.getInt("quantity"));
+
+                return Optional.of(product);
+
+            }
+
+        } catch(SQLException exception) {
+            throw new ProductNotFoundByIdException(id);
+        }
+
         return Optional.empty();
     }
 
