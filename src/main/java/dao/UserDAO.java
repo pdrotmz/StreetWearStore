@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.admin.IncorrectUsernameException;
 import model.user.User;
 import util.ConnectionFactory;
 
@@ -70,7 +71,7 @@ public class UserDAO{
             }
             return null;
         } catch (SQLException exception) {
-            throw new RuntimeException("Erro ao buscar o usuário!", exception);
+            throw new IncorrectUsernameException(username);
         }
     }
 
