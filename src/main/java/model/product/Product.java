@@ -1,7 +1,5 @@
 package model.product;
 
-import model.category.Category;
-
 import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.UUID;
